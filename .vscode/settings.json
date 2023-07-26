@@ -1,3 +1,12 @@
 {
-    "terminal.integrated.sendKeybindingsToShell": true
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#871c1c",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#b12525",
+        "statusBarItem.remoteBackground": "#871c1c",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "sash.hoverBorder": "#b12525"
+    },
+    "peacock.color": "#871c1c"
 }
