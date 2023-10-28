@@ -1,9 +1,31 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanMatch, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, CanMatchFn, CanActivateFn } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 
-@Injectable({providedIn: 'root'})
+
+function checkAuthStatus(): boolean | Observable<boolean> {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  return authService.checkAuthentication()
+  .pipe(
+    tap( isAuthenticated => console.log('Authtenticated: ',isAuthenticated)),
+    tap( isAuthenticated => {
+      if(!isAuthenticated) router.navigate(['./auth/login'])
+    })
+  )
+}
+/* actualmente estas funciones hacen lo mismo pero tiene diferente tipo */
+export const AuthGuardCM:CanMatchFn = (route,segments) => {
+  return checkAuthStatus();
+}
+export const AuthGuardCA: CanActivateFn = (route,state) => {
+  return checkAuthStatus();
+};
+
+
+/* meotodo deprecado funcional */
+/* @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanMatch, CanActivate {
 
   constructor(
@@ -34,4 +56,4 @@ export class AuthGuard implements CanMatch, CanActivate {
     // return false;
     return this.checkAuthStatus();
   }
-}
+} */
